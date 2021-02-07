@@ -50,7 +50,7 @@ export default function App() {
         style={{ minHeight: '64vh' }}
       >
         <Typography variant="h2">
-          Yomo Playground
+          Y3 Codec Playground
         </Typography>
         <FormControlLabel
           control={
