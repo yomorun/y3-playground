@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles()
   
-  const [input, setInput] = React.useState("0x0A, 0x01, 0x7F")
+  const [input, setInput] = React.useState("0x0A, 0x04, 0x59, 0x6f, 0x4d, 0x6f")
   const [output, setOutput] = React.useState("")
   const [padded, setPadded] = React.useState(false)
 
