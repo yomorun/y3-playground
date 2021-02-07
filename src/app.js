@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { req } from './utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,23 +20,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles()
-  const [state, setState] = React.useState({
-    // default values
-    userInput: "0x01, 0x01, 0x7F",
-    decoderOutput: ""
-  });
+  
+  const [input, setInput] = React.useState("0x0A, 0x01, 0x7F")
+  const [output, setOutput] = React.useState("")
+  const [padded, setPadded] = React.useState(false)
 
   const handleChange = (event) => {
-    setState({ includeTL: !state.includeTL });
-  };
-
-  const saveInput = (event) => {
-    setState({ userInput: event.target.value })
+    setPadded(!padded)
   }
 
-  const handleClick = (event) => {
-    console.log(event.currentTarget.name)
-    setState({ decoderOutput: state.userInput })
+  const saveInput = (event) => {
+    setInput(event.target.value)
+  }
+
+  const handleClick = async (event) => {
+    const res = Promise.resolve(req(input, padded, event.currentTarget.name))
+    res.then(function(v) {
+        setOutput(v.result || v.error)
+    })
   }
 
   return (
@@ -53,7 +55,7 @@ export default function App() {
         <FormControlLabel
           control={
             <Switch
-              checked={state.includeTL || false}
+              checked={padded}
               color="primary"
               onChange={handleChange}
             />
@@ -71,7 +73,7 @@ export default function App() {
           label="Input"
           multiline
           rows={16}
-          defaultValue={state.userInput}
+          value={input}
           variant="outlined"
           onChange={saveInput}
           InputLabelProps={{ shrink: true }}
@@ -81,9 +83,13 @@ export default function App() {
           color="primary"
           variant="text"
         >
-          <Button name="int16" onClick={handleClick}>int16</Button>
           <Button name="int32" onClick={handleClick}>int32</Button>
+          <Button name="uint32" onClick={handleClick}>uint32</Button>
           <Button name="int64" onClick={handleClick}>int64</Button>
+          <Button name="uint64" onClick={handleClick}>uint64</Button>
+          <Button name="float32" onClick={handleClick}>float32</Button>
+          <Button name="float64" onClick={handleClick}>float64</Button>
+          <Button name="bool" onClick={handleClick}>bool</Button>
           <Button name="string" onClick={handleClick}>string</Button>
         </ButtonGroup>
         <TextField
@@ -91,13 +97,12 @@ export default function App() {
           multiline
           rows={16}
           variant="outlined"
-          defaultValue={state.decoderOutput}
-          value={state.decoderOutput}
+          value={output}
           disabled
           InputLabelProps={{ shrink: true }}
         />
         </Grid>
       </Grid>
     </div>
-  );
+  )
 }
