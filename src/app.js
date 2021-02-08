@@ -1,9 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import Grid from '@material-ui/core/Grid';
-import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,18 +22,13 @@ export default function App() {
   
   const [input, setInput] = React.useState("0x0A, 0x04, 0x59, 0x6f, 0x4d, 0x6f")
   const [output, setOutput] = React.useState("")
-  const [padded, setPadded] = React.useState(false)
-
-  const handleChange = (event) => {
-    setPadded(!padded)
-  }
 
   const saveInput = (event) => {
     setInput(event.target.value)
   }
 
   const handleClick = async (event) => {
-    const res = Promise.resolve(req(input, padded, event.currentTarget.name))
+    const res = Promise.resolve(req(input, event.currentTarget.name))
     res.then(function(v) {
         setOutput(v.result || v.error)
     })
@@ -52,16 +46,12 @@ export default function App() {
         <Typography variant="h2">
           Y3 Codec Playground
         </Typography>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={padded}
-              color="primary"
-              onChange={handleChange}
-            />
-          }
-          label="Include TL"
-        />
+        <Button
+          dense color="secodary"
+          onclick={window.open('https://github.com/yomorun/y3-codec-golang', '_blank')}
+        >
+          <GitHubIcon style={{ paddingRight: 10 }} /> View Source
+        </Button>
         <Grid
           container
           spacing={0}

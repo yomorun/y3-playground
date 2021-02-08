@@ -1,4 +1,4 @@
-export async function req(input, padded, type) {
+export async function req(input, type) {
     let res;
 	try {
         res = await fetch("/api/decoder", {
@@ -8,7 +8,6 @@ export async function req(input, padded, type) {
             },
             body: JSON.stringify({
                 bytes: input,
-	            padded: padded,
 	            interpret_as: type
             })
         });
