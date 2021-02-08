@@ -47,8 +47,8 @@ export default function App() {
           Y3 Codec Playground
         </Typography>
         <Button
+          target="_blank" href="https://github.com/yomorun/y3-codec-golang"
           dense color="secodary"
-          onclick={window.open('https://github.com/yomorun/y3-codec-golang', '_blank')}
         >
           <GitHubIcon style={{ paddingRight: 10 }} /> View Source
         </Button>
